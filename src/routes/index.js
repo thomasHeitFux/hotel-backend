@@ -13,6 +13,7 @@ router.use("/detalles",detalleRouter);
 router.use("/estructuras",estructurasRouter);
 router.use("/metodos",metodosRouter);
 router.use("/tipos",tiposRouter);
+router.use("/try",(req,res)=>{res.send('hola mundanos')});
 
 
 module.exports = router;

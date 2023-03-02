@@ -4,8 +4,8 @@ const gastoServices = require("./gastos.services")
 
 router.get('/', gastoServices.getGastos);
 router.post('/', gastoServices.registerGasto);
+router.delete('/delete/:id', gastoServices.deleteGasto);
 // router.patch('/',userServices.updateMyUser)
-// router.delete('/delete',userServices.deleteAnUser)
 // router.post('/login', userServices.loginUser);
 
 module.exports = router;

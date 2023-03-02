@@ -1,12 +1,12 @@
 const server = require("./src/app.js");
 const { conn } = require("./src/db.js");
-// const { PRODUCTION, PORT } = process.env;
+const port = process.env.PORT || 3001;
 
 
 
 
 conn.sync({ force: true }).then(() => {
-  server.listen(3001, () => {
-    console.log("Servidor corriendo en el puerto 3001");
+  server.listen(port, () => {
+    console.log("Servidor corriendo en el puerto",port);
   });
 });

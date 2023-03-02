@@ -5,6 +5,7 @@ const morgan = require("morgan");
 const routes = require("./routes/index.js");
 const URL_LOCAL = "http://localhost:3000";
 // const { CORS_URL, PRODUCTION } = process.env;
+
 require("./db.js");
 
 const server = express();

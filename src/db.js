@@ -3,25 +3,43 @@ const { Sequelize } = require("sequelize");
 const fs = require("fs");
 const path = require("path");
 
-const { DB_USER, DB_PASSWORD, DB_HOST, PRODUCTION, DATABASE_URL } = process.env;
+const DB_USER = process.env.DB_USER ||  "postgres";
+const DB_PASSWORD = process.env.DB_PASSWORD || "password";
+const DB_HOST = process.env.DB_HOST || "localhost";
+const DB_URL = process.env.DATABASE_URL ||  `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/`
+const PRODUCTION = true;
+// Username:    postgres
+//   Password:    uF5hHMozG2LWHw5
+//   Hostname:    dry-water-7481.internal
+//   Flycast:     fdaa:1:7c9d:0:1::2
+//   Proxy port:  5432
+//   Postgres port:  5433
+//   Connection string: postgres://postgres:uF5hHMozG2LWHw5@[fdaa:1:7c9d:0:1::2]:5432
 
-const sequelize = PRODUCTION?
-   new Sequelize(
-      `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/users`,
-      {
-        logging: false,
-        native: false,
-      }
-    )
-  : new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/hotel`, {
+const sequelize = 
+PRODUCTION?
+new Sequelize(DB_URL, {
+
+  logging: false,
+  native: false,
+  // dialectOptions: {
+  //   ssl: {
+  //     require: true,
+  //     rejectUnauthorized: false,
+  //   },
+  // },
+})
+:
+   new Sequelize(DB_URL, {
+
       logging: false,
       native: false,
-      // dialectOptions: {
-      //   ssl: {
-      //     require: true,
-      //     rejectUnauthorized: false,
-      //   },
-      // },
+      dialectOptions: {
+        ssl: {
+          require: true,
+          rejectUnauthorized: false,
+        },
+      },
     });
 
 const basename = path.basename(__filename);
