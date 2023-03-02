@@ -4,8 +4,8 @@ const fs = require("fs");
 const path = require("path");
 
 const DB_USER = process.env.DB_USER ||  "postgres";
-const DB_PASSWORD = process.env.DB_PASSWORD || "password";
-const DB_HOST = process.env.DB_HOST || "localhost";
+const DB_PASSWORD = process.env.DB_PASSWORD || "postgres";
+const DB_HOST = process.env.DB_HOST || "database-1.coqqvzjkhatj.us-east-1.rds.amazonaws.com";
 const DB_URL = process.env.DATABASE_URL ||  `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/`
 const PRODUCTION = true;
 // Username:    postgres
