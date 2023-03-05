@@ -3,7 +3,7 @@ const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const routes = require("./routes/index.js");
-const URL_LOCAL = "http://localhost:3000";
+const URL_LOCAL = "https://hotel-frontend-mu.vercel.app";
 // const { CORS_URL, PRODUCTION } = process.env;
 
 require("./db.js");

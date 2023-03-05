@@ -15,6 +15,21 @@ module.exports = (sequelize)=>{
               importe: {
                 type: DataTypes.INTEGER,
               },
+              metodo: {
+                type: DataTypes.STRING,
+              },
+              tipo: {
+                type: DataTypes.STRING,
+              },
+              estructura: {
+                type: DataTypes.STRING,
+              },
+              detalle: {
+                type: DataTypes.STRING,
+              },
+              responsable: {
+                type: DataTypes.STRING,
+              },
   
         },{ timestamps: false }
     );

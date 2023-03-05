@@ -7,7 +7,7 @@ const DB_USER = process.env.DB_USER ||  "postgres";
 const DB_PASSWORD = process.env.DB_PASSWORD || "postgres";
 const DB_HOST = process.env.DB_HOST || "database-1.coqqvzjkhatj.us-east-1.rds.amazonaws.com";
 const DB_URL = process.env.DATABASE_URL ||  `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/`
-const PRODUCTION = true;
+const DEVELOPMENT = false;
 // Username:    postgres
 //   Password:    uF5hHMozG2LWHw5
 //   Hostname:    dry-water-7481.internal
@@ -17,17 +17,17 @@ const PRODUCTION = true;
 //   Connection string: postgres://postgres:uF5hHMozG2LWHw5@[fdaa:1:7c9d:0:1::2]:5432
 
 const sequelize = 
-PRODUCTION?
+DEVELOPMENT?
 new Sequelize(DB_URL, {
 
   logging: false,
   native: false,
-  // dialectOptions: {
-  //   ssl: {
-  //     require: true,
-  //     rejectUnauthorized: false,
-  //   },
-  // },
+  dialectOptions: {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false,
+    },
+  },
 })
 :
    new Sequelize(DB_URL, {
@@ -64,23 +64,9 @@ let capsEntries = entries.map((entry) => [
 ]);
 sequelize.models = Object.fromEntries(capsEntries);
 
-const { Gasto,Tipo,Estructura,Metodo,Responsable,Detalle } = sequelize.models;
+const { Gasto} = sequelize.models;
 
-Tipo.belongsTo(Gasto,{through:"gasto_Tipo"});
-Gasto.belongsToMany(Tipo,{through:"gasto_Tipo"});
 
-Detalle.belongsToMany(Gasto,{through:"gasto_detalle"});
-Gasto.belongsToMany(Detalle,{through:"gasto_detalle"});
-
-Responsable.belongsToMany(Gasto,{through:"gasto_responsable"});
-Gasto.belongsToMany(Responsable,{through:"gasto_responsable"});
-// 
-
-Estructura.belongsToMany(Gasto,{through:"gasto_estructura"});
-Gasto.belongsToMany(Estructura,{through:"gasto_estructura"});
-
-Metodo.belongsToMany(Gasto,{through:"gasto_metodo"});
-Gasto.belongsToMany(Metodo,{through:"gasto_metodo"});
 
 module.exports = {
   ...sequelize.models,

@@ -1,6 +1,6 @@
-# fly.toml file generated for lively-violet-9664 on 2023-02-27T18:50:34-03:00
+# fly.toml file generated for holy-bush-8629 on 2023-03-02T16:34:01-03:00
 
-app = "lively-violet-9664"
+app = "holy-bush-8629"
 kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []

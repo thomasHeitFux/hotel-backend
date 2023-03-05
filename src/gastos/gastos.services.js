@@ -8,6 +8,9 @@ const getGastos = async (req, res) => {
 
 const registerGasto = (req,res)=>{
     const {fecha,importe,responsable,metodo,tipo,estructura,detalle} = req.body;
+    if (!fecha||!importe||!responsable||!metodo||!tipo||!estructura||!detalle) {
+        res.status(400).send(`No pueden estar vacios los datos`)
+    }
     controllers.createGastos({fecha,importe,responsable,metodo,tipo,estructura,detalle})
     .then(data=>{
         res.status(200).send(data)
