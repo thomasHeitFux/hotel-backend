@@ -25,10 +25,22 @@ const deleteGasto = async (req, res) => {
     if (response) { res.status(202).json(response) }
     else { res.status(400).send('anda a saber que paso') }
 }
+const updateGasto = (req,res)=>{
+    const {id,fecha,importe,responsable,metodo,tipo,estructura,detalle} = req.body;
+    if (!fecha||!importe||!responsable||!metodo||!tipo||!estructura||!detalle) {
+        res.status(400).send(`No pueden estar vacios los datos`)
+    }
+    controllers.updateGastos(id,{fecha,importe,responsable,metodo,tipo,estructura,detalle})
+    .then(data=>{
+        res.status(200).json({ message: `user with ID: ${id} edited succesfully` })
+    })
+    .catch(err=>{res.status(400).send(`sory gor ${err}`)})
+}
 
 
 module.exports = {
     getGastos,
     registerGasto,
-    deleteGasto
+    deleteGasto,
+    updateGasto
 }

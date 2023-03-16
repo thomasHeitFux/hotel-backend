@@ -35,10 +35,19 @@ const deleteController = async (id) => {
     return id
   }
 }
+const updateGastos = async(id, data) => {
+  const result = await Gasto.update(data,{
+      where: {
+          id
+      }
+  })
+  return result  
+}
 
 
 module.exports = {
   getGastosController,
   createGastos,
-  deleteController
+  deleteController,
+  updateGastos
 }
