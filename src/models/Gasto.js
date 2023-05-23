@@ -13,7 +13,7 @@ module.exports = (sequelize)=>{
                 allowNull:false,
             },
               importe: {
-                type: DataTypes.INTEGER,
+                type: DataTypes.FLOAT,
               },
               metodo: {
                 type: DataTypes.STRING,

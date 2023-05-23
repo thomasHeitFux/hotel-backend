@@ -6,7 +6,7 @@ const path = require("path");
 const DB_USER = process.env.DB_USER ||  "postgres";
 const DB_PASSWORD = process.env.DB_PASSWORD || "postgres";
 const DB_HOST = process.env.DB_HOST || "database-1.coqqvzjkhatj.us-east-1.rds.amazonaws.com";
-const DB_URL = process.env.DATABASE_URL ||  `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/`
+const DB_URL = "postgres://hotel_dh9p_user:F65zJqSDPvqenMUS1tRT9lwzVSFcsjx0@dpg-chm2l7o2qv27ib3nf270-a.oregon-postgres.render.com/hotel_dh9p"
 const DEVELOPMENT = false;
 // Username:    postgres
 //   Password:    uF5hHMozG2LWHw5
