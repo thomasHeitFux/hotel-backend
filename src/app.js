@@ -3,7 +3,10 @@ const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const routes = require("./routes/index.js");
-const URL_LOCAL = "https://hotel-frontend-mu.vercel.app";
+
+const URL_LOCAL = process.env.NODE_ENV === 'production'
+  ? "https://hotel-frontend-mu.vercel.app" // URL de producción
+  : 'http://localhost:3000'; // URL de desarrollo
 // const { CORS_URL, PRODUCTION } = process.env;
 
 require("./db.js");

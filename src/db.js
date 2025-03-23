@@ -3,49 +3,28 @@ const { Sequelize } = require("sequelize");
 const fs = require("fs");
 const path = require("path");
 
-const DB_USER = process.env.DB_USER ||  "postgres";
-const DB_PASSWORD = process.env.DB_PASSWORD || "postgres";
-const DB_HOST = process.env.DB_HOST || "database-1.coqqvzjkhatj.us-east-1.rds.amazonaws.com";
-const DB_URL = "postgres://hotel_dh9p_user:F65zJqSDPvqenMUS1tRT9lwzVSFcsjx0@dpg-chm2l7o2qv27ib3nf270-a.oregon-postgres.render.com/hotel_dh9p"
+const DB_STORAGE = process.env.DB_STORAGE || "./db.sqlite"; // Ruta para el archivo SQLite
+
 const DEVELOPMENT = false;
-// Username:    postgres
-//   Password:    uF5hHMozG2LWHw5
-//   Hostname:    dry-water-7481.internal
-//   Flycast:     fdaa:1:7c9d:0:1::2
-//   Proxy port:  5432
-//   Postgres port:  5433
-//   Connection string: postgres://postgres:uF5hHMozG2LWHw5@[fdaa:1:7c9d:0:1::2]:5432
 
-const sequelize = 
-DEVELOPMENT?
-new Sequelize(DB_URL, {
-
-  logging: false,
-  native: false,
-  dialectOptions: {
-    ssl: {
-      require: true,
-      rejectUnauthorized: false,
-    },
-  },
-})
-:
-   new Sequelize(DB_URL, {
-
+// Configuración para SQLite
+const sequelize = DEVELOPMENT
+  ? new Sequelize({
+      dialect: 'sqlite',
+      storage: DB_STORAGE, // Usamos SQLite y definimos la ruta del archivo
       logging: false,
-      native: false,
-      dialectOptions: {
-        ssl: {
-          require: true,
-          rejectUnauthorized: false,
-        },
-      },
+    })
+  : new Sequelize({
+      dialect: 'sqlite',
+      storage: DB_STORAGE, // Usamos SQLite y definimos la ruta del archivo
+      logging: false,
     });
 
 const basename = path.basename(__filename);
 
 const modelDefiners = [];
 
+// Leemos los modelos desde la carpeta "models"
 fs.readdirSync(path.join(__dirname, "/models"))
   .filter(
     (file) =>
@@ -55,8 +34,10 @@ fs.readdirSync(path.join(__dirname, "/models"))
     modelDefiners.push(require(path.join(__dirname, "/models", file)));
   });
 
+// Asociamos los modelos al Sequelize
 modelDefiners.forEach((model) => model(sequelize));
 
+// Capitalizamos los nombres de los modelos (pasando la primera letra a mayúscula)
 let entries = Object.entries(sequelize.models);
 let capsEntries = entries.map((entry) => [
   entry[0][0].toUpperCase() + entry[0].slice(1),
@@ -64,11 +45,8 @@ let capsEntries = entries.map((entry) => [
 ]);
 sequelize.models = Object.fromEntries(capsEntries);
 
-const { Gasto} = sequelize.models;
-
-
-
+// Exportamos los modelos
 module.exports = {
   ...sequelize.models,
-  conn: sequelize,
+  conn: sequelize, // Exportamos la conexión a la base de datos
 };
